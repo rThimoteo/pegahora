@@ -1,3 +1,5 @@
+// COMANDOS EM JAVASCRIPT VANILLA
+
 // window.onload = function() {
 //     // alert("Página caregada!");
 //     // var element = document.getElementById("hora");
@@ -28,6 +30,7 @@
 //     console.log('pronto 1');
 // });
 
+//COMANDOS COM JQUERY
 $(function(){
     $('#formcep').on('submit', (ev)=> {
         ev.preventDefault();

@@ -1,4 +1,5 @@
-
+Projeto criado com intuito de aprender o básico de uma aplicação Web.
+Utilizando JavaScript, CSS, PHP e HTML.
 # Criar Página Sem Framework
 
 * [ok]  Criar classe
