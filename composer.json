@@ -1,0 +1,21 @@
+{
+    "name": "rthimoteo/pegahora",
+    "description": "Ver a Hora",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Rthimoteo\\Pegahora\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Rodrigo Thimoteo",
+            "email": "rodrigo.thimoteo@kymo.it"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "nesbot/carbon": "^2.49"
+    }
+}
