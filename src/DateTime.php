@@ -20,17 +20,23 @@ class DateTime
 {
 
     private $hora;
-    private $local;
+    private $dia;
 
 
     public function __construct()
     {
-        $this->hora = Carbon::now()->timezone('America/Sao_Paulo');
+        $this->dia = Carbon::now()->timezone('America/Sao_Paulo')
+        ->isoFormat('DD/MM/YYYY');
+        $this->hora = Carbon::now()->timezone('America/Sao_Paulo')
+        ->isoFormat('HH \h\o\r\a\s \e mm \m\i\n\u\t\o\s');
         
     }
 
     public function imprimirHora()
-    {
+    {   
+        echo "Dia:";
+        echo $this->dia;
+        echo "<br>";
         echo $this->hora;
     }
 }

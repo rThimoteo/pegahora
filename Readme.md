@@ -9,7 +9,7 @@
 * [ok] Interpolarização PHP HTML
 * [ok] Tags de PHP
 * [ok] Base JavaScript
-* [] JQuery
+* [ok] JQuery
 * [] Criar Docker 
 * [] Migrar BASE Html para Bootstrap
 * [] Modelar Database SqLite
