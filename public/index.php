@@ -36,22 +36,7 @@
             <span class="hora"><?php $datetime->imprimirHora(); ?> </span>
             <br>
             <br>
-            <p>
-                <label id="lb-cep"></label>
-                <span class="resp" id="cep-resp"></span>
-                <br>
-                <label id="lb-estado"></label>
-                <span class="resp" id="uf"></span>
-                <br>
-                <label  id="lb-cidade"></label>
-                <span class="resp" id="cidade"></span>
-                <br>
-                <label id="lb-bairro"></label>
-                <span class="resp" id="bairro"></span>
-                <br>
-                <label id="lb-rua"></label>
-                <span class="resp" id="rua"></span>
-            </p>
+            <p id="dados-cep"></p>
         </div>
         <div class="table-responsive">
             <table id="users-table" class="table table-striped table-sm">

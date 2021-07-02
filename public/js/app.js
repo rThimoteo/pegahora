@@ -6,18 +6,24 @@ $(function(){
         $.ajax({
             url: "https://viacep.com.br/ws/"+cep+"/json/",
             success: function(data){
-                console.log(data);
-                $('#lb-estado').append(['Estado:'].join(''));
-                $('#lb-cidade').append(['Cidade:'].join(''));
-                $('#lb-bairro').append(['Bairro:'].join(''));
-                $('#lb-rua').append(['Logradouro:'].join(''));
-                $('#lb-cep').append(['CEP:'].join(''));
-                $('#cep-resp').html(data.cep);
-                $('#cidade').html(data.localidade);
-                $('#uf').html(data.uf);
-                $('#bairro').html(data.bairro);
-                $('#rua').html(data.logradouro);
                 $('#cep').val('');
+                $('#cep').blur();
+                $('#dados-cep').append([
+                    '<label id="lb-cep">CEP: </label>',
+                    '<span class="resp" id="cep-resp">',data.cep,'</span>',
+                    '<br>',
+                    '<label id="lb-estado">Estado: </label>',
+                    '<span class="resp" id="uf">',data.uf,'</span>',
+                    '<br>',
+                    '<label  id="lb-cidade">Cidade: </label>',
+                    '<span class="resp" id="cidade">',data.localidade,'</span>',
+                    '<br>',
+                    '<label id="lb-bairro">Bairro: </label>',
+                    '<span class="resp" id="bairro">',data.bairro,'</span>',
+                    '<br>',
+                    '<label id="lb-rua">Logradouro: </label>',
+                    '<span class="resp" id="rua">',data.logradouro,'</span>'
+                ].join(''));
             },
             error: function(response, textStatus, errorThrown){
                 alert('Problema na Requisição');
@@ -58,17 +64,17 @@ $(function(){
         error: function(error) {
         }
     }); 
-    $('#cep').on('click', (ev) => {
-        $('#lb-estado').text('');
-        $('#lb-cidade').text('');
-        $('#lb-bairro').text('');
-        $('#lb-rua').text('');
-        $('#cidade').text('');
-        $('#uf').text('');
-        $('#bairro').text('');
-        $('#rua').text('');
-        $('#lb-cep').text('');
-        $('#cep-resp').text('');
+    $('#cep').on('focusin', (ev) => {
+        $('#lb-estado').remove();
+        $('#lb-cidade').remove();
+        $('#lb-bairro').remove();
+        $('#lb-rua').remove();
+        $('#cidade').remove();
+        $('#uf').remove();
+        $('#bairro').remove();
+        $('#rua').remove();
+        $('#lb-cep').remove();
+        $('#cep-resp').remove();
     });
 });
 
