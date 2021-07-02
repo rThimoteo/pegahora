@@ -37,16 +37,19 @@
             <br>
             <br>
             <p>
-                <label>Estado:</label>
+                <label id="lb-cep"></label>
+                <span class="resp" id="cep-resp"></span>
+                <br>
+                <label id="lb-estado"></label>
                 <span class="resp" id="uf"></span>
                 <br>
-                <label>Cidade:</label>
+                <label  id="lb-cidade"></label>
                 <span class="resp" id="cidade"></span>
                 <br>
-                <label>Bairro:</label>
+                <label id="lb-bairro"></label>
                 <span class="resp" id="bairro"></span>
                 <br>
-                <label>Logardouro:</label>
+                <label id="lb-rua"></label>
                 <span class="resp" id="rua"></span>
             </p>
         </div>

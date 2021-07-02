@@ -7,10 +7,17 @@ $(function(){
             url: "https://viacep.com.br/ws/"+cep+"/json/",
             success: function(data){
                 console.log(data);
+                $('#lb-estado').append(['Estado:'].join(''));
+                $('#lb-cidade').append(['Cidade:'].join(''));
+                $('#lb-bairro').append(['Bairro:'].join(''));
+                $('#lb-rua').append(['Logradouro:'].join(''));
+                $('#lb-cep').append(['CEP:'].join(''));
+                $('#cep-resp').html(data.cep);
                 $('#cidade').html(data.localidade);
                 $('#uf').html(data.uf);
                 $('#bairro').html(data.bairro);
                 $('#rua').html(data.logradouro);
+                $('#cep').val('');
             },
             error: function(response, textStatus, errorThrown){
                 alert('Problema na Requisição');
@@ -51,5 +58,17 @@ $(function(){
         error: function(error) {
         }
     }); 
+    $('#cep').on('click', (ev) => {
+        $('#lb-estado').text('');
+        $('#lb-cidade').text('');
+        $('#lb-bairro').text('');
+        $('#lb-rua').text('');
+        $('#cidade').text('');
+        $('#uf').text('');
+        $('#bairro').text('');
+        $('#rua').text('');
+        $('#lb-cep').text('');
+        $('#cep-resp').text('');
+    });
 });
 
