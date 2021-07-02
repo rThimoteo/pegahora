@@ -18,9 +18,9 @@ Utilizando JavaScript, CSS, PHP e HTML.
 * [ok] Métodos de iteração de array (javascript e jquery)
 * [ok] Métodos beforeSend e complete ajax
 * [ok] Importar biblioteca de ícones (fontawesome)
-* [] Modelar Database SqLite
+* [ok] Criar Docker 
+* [] Modelar Database MySQL
 * [] Navegar para Perfil de Usuário
 * [] Crud de Usuário em OOP
-* [] Criar Docker 
 * [] Free Domain
 * [] Deploy Heroku

@@ -1,6 +1,6 @@
 //Funções em JQuery
 $(function(){
-    $('#formcep').on('submit', (ev)=> {
+    $('#formcep').on('submit', async (ev) => { 
         ev.preventDefault();
         var cep = $('#cep').val();
         $.ajax({
@@ -9,20 +9,20 @@ $(function(){
                 $('#cep').val('');
                 $('#cep').blur();
                 $('#dados-cep').append([
-                    '<label id="lb-cep">CEP: </label>',
-                    '<span class="resp" id="cep-resp">',data.cep,'</span>',
-                    '<br>',
-                    '<label id="lb-estado">Estado: </label>',
-                    '<span class="resp" id="uf">',data.uf,'</span>',
-                    '<br>',
-                    '<label  id="lb-cidade">Cidade: </label>',
-                    '<span class="resp" id="cidade">',data.localidade,'</span>',
-                    '<br>',
-                    '<label id="lb-bairro">Bairro: </label>',
-                    '<span class="resp" id="bairro">',data.bairro,'</span>',
-                    '<br>',
-                    '<label id="lb-rua">Logradouro: </label>',
-                    '<span class="resp" id="rua">',data.logradouro,'</span>'
+                        '<label id="lb-cep">CEP: </label>',
+                        '<span class="resp" id="cep-resp">',data.cep,'</span>',
+                        '<br>',
+                        '<label id="lb-estado">Estado: </label>',
+                        '<span class="resp" id="uf">',data.uf,'</span>',
+                        '<br>',
+                        '<label  id="lb-cidade">Cidade: </label>',
+                        '<span class="resp" id="cidade">',data.localidade,'</span>',
+                        '<br>',
+                        '<label id="lb-bairro">Bairro: </label>',
+                        '<span class="resp" id="bairro">',data.bairro,'</span>',
+                        '<br>',
+                        '<label id="lb-rua">Logradouro: </label>',
+                        '<span class="resp" id="rua">',data.logradouro,'</span>'
                 ].join(''));
             },
             error: function(response, textStatus, errorThrown){
@@ -33,7 +33,7 @@ $(function(){
     });
     
     const usersApiEndpoint = 'https://jsonplaceholder.typicode.com/users';
-    
+
     const loadingDataRow = [
         '<tr id="loading">',
             '<td colspan="6" class="text-center">Carregando...</td>',
@@ -63,18 +63,11 @@ $(function(){
         },
         error: function(error) {
         }
-    }); 
+    });
+
+
     $('#cep').on('focusin', (ev) => {
-        $('#lb-estado').remove();
-        $('#lb-cidade').remove();
-        $('#lb-bairro').remove();
-        $('#lb-rua').remove();
-        $('#cidade').remove();
-        $('#uf').remove();
-        $('#bairro').remove();
-        $('#rua').remove();
-        $('#lb-cep').remove();
-        $('#cep-resp').remove();
+        $('#dados-cep').html('');
     });
 });
 
