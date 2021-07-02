@@ -26,7 +26,6 @@ $(function(){
             '<td colspan="6" class="text-center">Carregando...</td>',
         '<tr>'
     ];
-
     $.ajax({
         url: usersApiEndpoint,
         beforeSend: function() {
