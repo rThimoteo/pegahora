@@ -1,36 +1,4 @@
-// COMANDOS EM JAVASCRIPT VANILLA
-
-// window.onload = function() {
-//     // alert("Página caregada!");
-//     // var element = document.getElementById("hora");
-//     // console.log(element);
-//     // element.innerText = "Batata";
-
-//     document.getElementById("formcep").addEventListener("submit", function(ev){
-//         ev.preventDefault();
-//         var cep = document.getElementById("cep").value;
-        
-//         fetch("https://viacep.com.br/ws/"+cep+"/json/")
-//         .then(response => response.json())
-//         .then (data =>{
-//             console.log(data);
-//             var cidade = document.getElementById("cidade");
-//             cidade.innerText = data.localidade;
-            
-//         })
-//         .catch(error => {
-//             console.error(error);
-//         });
-        
-//     })
-// }
-
-
-// $(document).ready(()=>{
-//     console.log('pronto 1');
-// });
-
-//COMANDOS COM JQUERY
+//Funções em JQuery
 $(function(){
     $('#formcep').on('submit', (ev)=> {
         ev.preventDefault();
@@ -48,9 +16,41 @@ $(function(){
                 alert('Problema na Requisição');
                 console.error(response, textStatus, errorThrown);
             }
-
         });
     });
+    
+    const usersApiEndpoint = 'https://jsonplaceholder.typicode.com/users';
+    
+    const loadingDataRow = [
+        '<tr id="loading">',
+            '<td colspan="6" class="text-center">Carregando...</td>',
+        '<tr>'
+    ];
 
+    $.ajax({
+        url: usersApiEndpoint,
+        beforeSend: function() {
+            $('#users-table').find('tbody').append(loadingDataRow.join(''));
+        },
+        complete: function() {
+            $('#loading').remove();
+        },
+        success: function(data) {
+            $.each(data, function(index, userApi) {
+                $('#users-table').find('tbody').append([
+                    '<tr>', 
+                        '<td>',userApi.id,'</td>', 
+                        '<td>',userApi.name,'</td>', 
+                        '<td>',userApi.username,'</td>', 
+                        '<td>',userApi.email,'</td>', 
+                        '<td>',userApi.phone,'</td>', 
+                        '<td>',userApi.website,'</td>',
+                    '</tr>'
+                ].join(''))
+            });
+        },
+        error: function(error) {
+        }
+    }); 
 });
 

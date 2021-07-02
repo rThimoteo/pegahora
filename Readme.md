@@ -11,8 +11,16 @@ Utilizando JavaScript, CSS, PHP e HTML.
 * [ok] Tags de PHP
 * [ok] Base JavaScript
 * [ok] JQuery
-* [] Criar Docker 
-* [] Migrar BASE Html para Bootstrap
+* [ok] Importar biblioteca do bootstrap e dependencias
+* [ok] Buscar dados de usuário da API JSONPLACEHOLDER
+* [ok] Criar lista(tabela) de usuários encontrados na API
+* [ok] Aplicar estilos na página, utilizando classes do bootstrap
+* [ok] Métodos de iteração de array (javascript e jquery)
+* [ok] Métodos beforeSend e complete ajax
+* [ok] Importar biblioteca de ícones (fontawesome)
 * [] Modelar Database SqLite
 * [] Navegar para Perfil de Usuário
 * [] Crud de Usuário em OOP
+* [] Criar Docker 
+* [] Free Domain
+* [] Deploy Heroku
