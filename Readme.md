@@ -19,7 +19,9 @@ Utilizando JavaScript, CSS, PHP e HTML.
 * [ok] Métodos beforeSend e complete ajax
 * [ok] Importar biblioteca de ícones (fontawesome)
 * [ok] Criar Docker 
-* [] Modelar Database MySQL
+* [ok] Modelar Database MySQL
+* [ok] Aprendendo PHP Composer
+* [] Fazer Insert DB
 * [] Navegar para Perfil de Usuário
 * [] Crud de Usuário em OOP
 * [] Free Domain

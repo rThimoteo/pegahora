@@ -16,6 +16,8 @@
     ],
     "minimum-stability": "stable",
     "require": {
-        "nesbot/carbon": "^2.49"
+        "nesbot/carbon": "^2.49",
+        "vlucas/phpdotenv": "^5.3",
+        "guzzlehttp/guzzle": "^7.3"
     }
 }

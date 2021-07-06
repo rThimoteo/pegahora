@@ -2,6 +2,8 @@
     require "../vendor/autoload.php";
     use Rthimoteo\Pegahora\DateTime;
     $datetime = new DateTime();
+    // $dotenv = Dotenv\Dotenv::createImmutable(__DIR__."/../");
+    // $dotenv->safeLoad();
     $teste = true;
 ?>
 <!DOCTYPE html>
