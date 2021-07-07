@@ -21,7 +21,10 @@ Utilizando JavaScript, CSS, PHP e HTML.
 * [ok] Criar Docker 
 * [ok] Modelar Database MySQL
 * [ok] Aprendendo PHP Composer
-* [] Fazer Insert DB
+* [ok] Fazer Insert DB
+* [ok] Revisão de MySQL  (criação tabela, query, insert, joins)
+* [ok] Fazer Insert DB com dados da API
+* [] Trazer informações do banco para tabela
 * [] Navegar para Perfil de Usuário
 * [] Crud de Usuário em OOP
 * [] Free Domain
