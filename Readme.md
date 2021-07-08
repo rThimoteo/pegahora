@@ -24,9 +24,10 @@ Utilizando JavaScript, CSS, PHP e HTML.
 * [ok] Fazer Insert DB
 * [ok] Revisão de MySQL  (criação tabela, query, insert, joins)
 * [ok] Fazer Insert DB com dados da API
-* [] Criar API simples para obter dados do banco
-* [] Trazer informações do banco para tabela
-* [] Implementar API simples com slim
+* [ok] Criar API simples para obter dados do banco
+* [ok] Trazer informações do banco para tabela
+* [ok] Implementar API simples com Slim
+* [ok] Criar template para Home
 * [] Navegar para Perfil de Usuário
 * [] Crud de Usuário em OOP
 * [] Free Domain

@@ -43,7 +43,7 @@ class  ComandLine
                 $id_user = $this->addUserAndReturnUserId($user);
                 $this->addAddress($user, $id_user);
                 $this->addCompany($user, $id_user);
-                echo 'Usuários '.$user["name"].' inserido';
+                echo 'Usuário '.$user["name"].' inserido.'. PHP_EOL; 
             }
         }
         catch (\Exception $ex)

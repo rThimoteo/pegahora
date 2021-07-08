@@ -18,6 +18,10 @@
     "require": {
         "nesbot/carbon": "^2.49",
         "vlucas/phpdotenv": "^5.3",
-        "guzzlehttp/guzzle": "^7.3"
+        "guzzlehttp/guzzle": "^7.3",
+        "slim/slim": "^4.0",
+        "slim/http": "^1.2",
+        "slim/psr7": "^1.4",
+        "slim/twig-view": "^3.2"
     }
 }

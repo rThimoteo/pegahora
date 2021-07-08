@@ -1,27 +1,13 @@
 <?php
-/*
-
-    Namespace [ok]
-
-    Nome da Classe [ok]
-
-    Properties[ok]
-
-    Methods[ok]
-
-
-*/
 
 namespace Rthimoteo\Pegahora;
 
 use Carbon\Carbon;
-
 class DateTime 
 {
 
     private $hora;
     private $dia;
-
 
     public function __construct()
     {
@@ -32,11 +18,9 @@ class DateTime
         
     }
 
-    public function imprimirHora()
+    public function imprimirHora() : string
     {   
-        echo "Dia:";
-        echo $this->dia;
-        echo "<br>";
-        echo $this->hora;
+        $time = "Dia:" . $this->dia ." ". $this->hora;
+        return $time;
     }
 }

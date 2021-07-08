@@ -32,7 +32,7 @@ $(function(){
         });
     });
     
-    const usersApiEndpoint = 'https://jsonplaceholder.typicode.com/users';
+    const usersApiEndpoint = 'http://web.pegahora.com/users';
 
     const loadingDataRow = [
         '<tr id="loading">',
@@ -52,11 +52,11 @@ $(function(){
                 $('#users-table').find('tbody').append([
                     '<tr>', 
                         '<td>',userApi.id,'</td>', 
-                        '<td>',userApi.name,'</td>', 
+                        '<td>',userApi.user_name,'</td>', 
                         '<td>',userApi.username,'</td>', 
                         '<td>',userApi.email,'</td>', 
-                        '<td>',userApi.phone,'</td>', 
-                        '<td>',userApi.website,'</td>',
+                        '<td>',userApi.company_name,'</td>', 
+                        '<td>',userApi.street,'</td>',
                     '</tr>'
                 ].join(''))
             });
