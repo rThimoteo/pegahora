@@ -40,31 +40,9 @@ class  ComandLine
             $users = json_decode($response->getBody(), true);
 
             foreach ($users as $user) {
-                $id_user = $this->createAndReturnUserId($user);
-                
-                $companydb = [
-                    $user["company"]["name"],
-                    $user["company"]["bs"],
-                    $user["company"]["catchPhrase"],
-                    $id_user
-                ];
-
-                $sqlCompanies = 'insert into companies (name, bs, catch_phrase, id_user) values (?,?,?,?)';
-                $stmtCompanies = $this->dbConnection->prepare($sqlCompanies);
-                $stmtCompanies->execute($companydb);
-                
-                $addressdb = [
-                    $user["address"]["street"],
-                    $user["address"]["suite"],
-                    $user["address"]["zipcode"],
-                    $user["address"]["geo"]["lat"],
-                    $user["address"]["geo"]["lng"],
-                    $id_user
-                ];
-
-                $sqlAddress = 'insert into addresses (street, suite, zipcode, lat, `long`, id_user) values (?,?,?,?,?,?)';
-                $stmtAddress = $this->dbConnection->prepare($sqlAddress);
-                $stmtAddress->execute($addressdb);
+                $id_user = $this->addUserAndReturnUserId($user);
+                $this->addAddress($user, $id_user);
+                $this->addCompany($user, $id_user);
                 echo 'Usuários '.$user["name"].' inserido';
             }
         }
@@ -76,12 +54,12 @@ class  ComandLine
     }
     
     /**
-     * Função para atribuir o usuário para o Array
+     * Função para atribuir o usuário para o Array e retornar seu ID
      * 
      * @param array $user
      * @return integer
      */
-    private function createAndReturnUserId(array $user) : int
+    private function addUserAndReturnUserId(array $user) : int
     {
         $userdb = [
             $user["name"],
@@ -95,6 +73,48 @@ class  ComandLine
         $this->insertToDb($sql, $userdb);
 
         return $this->dbConnection->lastInsertId();
+    }
+
+    /**
+     * Função que adiciona um endereço no banco de dados usando o id de User
+     *
+     * @param array $user
+     * @param integer $id_user
+     * @return void
+     */
+    private function addAddress(array $user, int $id_user) : void
+    {
+        $addressdb = [
+            $user["address"]["street"],
+            $user["address"]["suite"],
+            $user["address"]["zipcode"],
+            $user["address"]["geo"]["lat"],
+            $user["address"]["geo"]["lng"],
+            $id_user
+        ];
+
+        $sqlAddress = 'insert into addresses (street, suite, zipcode, lat, `long`, id_user) values (?,?,?,?,?,?)';
+        $this->insertToDb($sqlAddress, $addressdb);
+    }
+
+    /**
+     * Função que adiciona a compania no banco de dados usando o id de User
+     *
+     * @param array $user
+     * @param integer $id_user
+     * @return void
+     */
+    private function addCompany(array $user, int $id_user) : void
+    {
+        $companydb = [
+            $user["company"]["name"],
+            $user["company"]["bs"],
+            $user["company"]["catchPhrase"],
+            $id_user
+        ];
+
+        $sqlCompanies = 'insert into companies (name, bs, catch_phrase, id_user) values (?,?,?,?)';
+        $this->insertToDb($sqlCompanies, $companydb);
     }
 
     private function insertToDb(string $sql, array $data) : void
