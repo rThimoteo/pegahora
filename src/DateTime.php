@@ -18,9 +18,15 @@ class DateTime
         
     }
 
+    public function imprimirDia() : string
+    {   
+        $dia = "Dia:" . $this->dia ;
+        return $dia;
+    }
+
     public function imprimirHora() : string
     {   
-        $time = "Dia:" . $this->dia ." ". $this->hora;
-        return $time;
+        $horario = $this->hora;
+        return $horario;
     }
 }
