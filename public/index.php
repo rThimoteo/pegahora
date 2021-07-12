@@ -39,5 +39,17 @@
         return UserController::getUsers($request, $response);
     });
 
+    $app->get('/user/{id}', function (Request $request, Response $response, array $args) 
+    {
+
+        return UserController::getUser($request, $response, $args);
+    });
+
+    $app->delete('/user/{id}', function (Request $request, Response $response, array $args) 
+    {
+
+        return UserController::deleteUser($args['id'],$response);
+    });
+    
     $app->run();
  

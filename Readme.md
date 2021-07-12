@@ -28,7 +28,14 @@ Utilizando JavaScript, CSS, PHP e HTML.
 * [ok] Trazer informações do banco para tabela
 * [ok] Implementar API simples com Slim
 * [ok] Criar template para Home
-* [] Navegar para Perfil de Usuário
-* [] Crud de Usuário em OOP
+* [ok] Manipulação DOM JQuery
+* [ok] Tipos de Routes (Get, Post, Delete, Put, Patch)
+* [ok] Criar API de dados de usuário (por id)
+* [ok] API de exclusão de usuário (via id)
+* [ok] Excluir usuário via API
+* [] Trabalhar com Soft Delete
+* [] Listar usuários via API
+* [] Editar usuário via API
+* [] Adicionar usuário via API
 * [] Free Domain
 * [] Deploy Heroku

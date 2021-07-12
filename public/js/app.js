@@ -33,6 +33,7 @@ $(function(){
     });
     
     const usersApiEndpoint = 'http://web.pegahora.com/users';
+    const userApi = 'http://web.pegahora.com/user/';
 
     const loadingDataRow = [
         '<tr id="loading">',
@@ -51,20 +52,52 @@ $(function(){
             $.each(data, function(index, userApi) {
                 $('#users-table').find('tbody').append([
                     '<tr>', 
-                        '<td>',userApi.id,'</td>', 
                         '<td>',userApi.user_name,'</td>', 
                         '<td>',userApi.username,'</td>', 
-                        '<td>',userApi.email,'</td>', 
-                        '<td>',userApi.company_name,'</td>', 
-                        '<td>',userApi.street,'</td>',
+                        '<td>',userApi.email,'</td>',
+                        '<td>',
+                            '<button class="btn btn-sm btn-primary mr-2 btn-view" data-id="'+userApi.id+'">',
+                                '<i class="fas fa-eye" ></i>',
+                            '</button>',
+                            '<button class="btn btn-sm btn-success mr-2 btn-edit" data-id="'+userApi.id+'">',
+                                '<i class="fas fa-edit"></i>',
+                            '</button>',
+                            '<button class="btn btn-sm btn-danger btn-delete" data-id="'+userApi.id+'">',
+                                '<i class="fas fa-trash-alt"></i>',
+                            '</button>',
+                        '</td>',
                     '</tr>'
                 ].join(''))
             });
+            
+            rebindButtons();
         },
         error: function(error) {
         }
     });
 
+    function rebindButtons (){
+        $('.btn-delete').off('click');
+
+        $('.btn-delete').on('click', function() {
+            var userId = $(this).data('id');
+            var response = confirm('Deseja mesmo excluir o usuário?');
+            if (response){
+                $.ajax({
+                    url: userApi + userId,
+                    type:'delete',
+                    success:function(data){
+                        $(this).parent().parent().remove();
+                        alert('Usuário Excluído com sucesso.');
+                    },
+                    error:function(error){
+                        alert('Ocorreu um erro inesperado.');
+                        console.error(error);
+                    } 
+                });
+            }
+        });
+    }
 
     $('#cep').on('focusin', (ev) => {
         $('#dados-cep').html('');
