@@ -169,6 +169,38 @@ $(function(){
         });
     });
 
+    $('#form-user').on('submit', (ev) => { 
+        ev.preventDefault();
+        var userData = {
+            'name' : $('#form-user-name').val(),
+            'email' : $('#form-user-email').val(),
+            'username' : $('#form-user-username').val(),
+            'phone' : $('#form-user-phone').val(),
+            'website' : $('#form-user-website').val()
+        };
+        console.log(userData);
+        $.ajax({
+            url: userApi+'create',
+
+            data:userData,
+
+            type: 'POST',
+
+            beforeSend: function() {
+
+            },
+            
+            success: function(data) {
+                console.log(data);
+            },
+            
+            error: function(error) {
+                console.log(error);
+            }
+        });    
+        
+    });
+
     $('#cep').on('focusin', (ev) => {
         $('#dados-cep').html('');
     });

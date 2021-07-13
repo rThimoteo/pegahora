@@ -66,9 +66,9 @@ class UserController
 
             from
                 users as u 
-                join companies as c on 
+                left join companies as c on 
                     u.id = c.id_user 
-                join addresses as a on 
+                left join addresses as a on 
                     u.id =  a.id_user
             where
                 u.id = $userId
@@ -126,6 +126,29 @@ class UserController
             $stmt = $dbConnection->prepare($sql);
             $stmt->execute(['id' => $id]);
             $json = json_encode(['message' => 'Usuário Excluído!', 'status' => 200]);
+        }
+        catch(\Exception $e){
+            $json = json_encode(['message' => $e->getMessage(), 'status' => $e->getCode()]);
+            $response->withStatus($e->getCode());
+        }
+
+        $response->getBody()->write($json);
+
+        return $response;
+    }
+
+    public static function createUser(array $data, Response $response)
+    {
+        header('Content-Type: application/json');
+
+        $dbConnection = new Mysqldriver();
+
+        try{
+            $sql="insert into users(name, email, username, phone, website) values (:name, :email, :username, :phone, :website)";
+
+            $stmt = $dbConnection->prepare($sql);
+            $stmt->execute($data);
+            $json = json_encode(['message' => 'Usuário Criado!', 'status' => 200]);
         }
         catch(\Exception $e){
             $json = json_encode(['message' => $e->getMessage(), 'status' => $e->getCode()]);

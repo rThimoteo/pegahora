@@ -35,7 +35,7 @@ Utilizando JavaScript, CSS, PHP e HTML.
 * [ok] Excluir usuário via API
 * [ok] Trabalhar com Soft Delete
 * [ok] Listar detalhes do usuário via API
+* [ok] Adicionar usuário via API
 * [] Editar usuário via API
-* [] Adicionar usuário via API
 * [] Free Domain
 * [] Deploy Heroku

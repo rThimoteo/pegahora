@@ -51,5 +51,13 @@
         return UserController::deleteUser($args['id'],$response);
     });
     
+    $app->post('/user/create', function (Request $request, Response $response, array $args) 
+    {
+        $body = $request->getParsedBody();
+    
+        return UserController::createUser($body, $response);
+    });
+
+    
     $app->run();
  
