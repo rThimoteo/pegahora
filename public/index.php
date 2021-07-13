@@ -28,8 +28,8 @@
     $app->get('/', function (Request $request, Response $response, array $args) {
         $view = Twig::fromRequest($request);
         return $view->render($response, 'home.html', [
-            'dia' => (new DateTime())->imprimirHora(),
-            'hora' => (new DateTime())->imprimirDia()
+            'dia' => (new DateTime())->imprimirDia(),
+            'hora' => (new DateTime())->imprimirHora()            
         ]);
 
     });
