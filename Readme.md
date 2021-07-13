@@ -33,8 +33,8 @@ Utilizando JavaScript, CSS, PHP e HTML.
 * [ok] Criar API de dados de usuário (por id)
 * [ok] API de exclusão de usuário (via id)
 * [ok] Excluir usuário via API
-* [] Trabalhar com Soft Delete
-* [] Listar usuários via API
+* [ok] Trabalhar com Soft Delete
+* [ok] Listar detalhes do usuário via API
 * [] Editar usuário via API
 * [] Adicionar usuário via API
 * [] Free Domain

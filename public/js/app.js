@@ -56,7 +56,7 @@ $(function(){
                         '<td>',userApi.username,'</td>', 
                         '<td>',userApi.email,'</td>',
                         '<td>',
-                            '<button class="btn btn-sm btn-primary mr-2 btn-view" data-id="'+userApi.id+'">',
+                            '<button class="btn btn-sm btn-primary mr-2 btn-view" data-toggle="modal" data-target="#user-detail-modal" data-id="'+userApi.id+'">',
                                 '<i class="fas fa-eye" ></i>',
                             '</button>',
                             '<button class="btn btn-sm btn-success mr-2 btn-edit" data-id="'+userApi.id+'">',
@@ -81,13 +81,14 @@ $(function(){
 
         $('.btn-delete').on('click', function() {
             var userId = $(this).data('id');
+            var userRow = $(this).parent().parent();
             var response = confirm('Deseja mesmo excluir o usuário?');
             if (response){
                 $.ajax({
                     url: userApi + userId,
                     type:'delete',
                     success:function(data){
-                        $(this).parent().parent().remove();
+                        userRow.remove();
                         alert('Usuário Excluído com sucesso.');
                     },
                     error:function(error){
@@ -98,6 +99,75 @@ $(function(){
             }
         });
     }
+
+    $('#user-detail-modal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var userId = button.data('id');
+        var modal = $(this);
+        $.ajax({
+            url: userApi+userId,
+            beforeSend: function() {
+                $('#user-detail-modal-title').text('Loading...');
+                $('#user-detail-modal-body').html('<p class="text-center"> Loading... </p>');
+            },
+            success: function(data) {
+                $('#user-detail-modal-title').text(data.user.name);
+                $('#user-detail-modal-body').html('');
+                
+                $('#user-detail-modal-body').append([
+                    '<dl class="row">',
+                        '<dt class="col-sm-3">Name:</dt>',
+                        '<dd class="col-sm-9 mb-3">',data.user.name,'</dd>',
+                        '<dt class="col-sm-3">E-mail:</dt>',
+                        '<dd class="col-sm-9 mb-3">',data.user.email,'</dd>',
+                        '<dt class="col-sm-3">Username:</dt>',
+                        '<dd class="col-sm-9 mb-3">',data.user.username,'</dd>',
+                        '<dt class="col-sm-3">Phone:</dt>',
+                        '<dd class="col-sm-9 mb-3">',data.user.phone,'</dd>',
+                        '<dt class="col-sm-3">Website:</dt>',
+                        '<dd class="col-sm-9 mb-3">',data.user.website,'</dd>',
+                    '</dl>',
+                    '<hr>'
+                ].join(''));
+                
+                $('#user-detail-modal-body').append([
+                    '<h5>Addresses</h5>'
+                ].join(''));
+                $.each(data.user.addresses, function (index, address){
+                    $('#user-detail-modal-body').append([
+                        '<div class="list-group-item list-group-item-action">',
+                            '<div class="d-flex flex-column w-100">',
+                                '<h5 class="mb-1">',address.street,'</h5>',
+                                '<p class="mb-1">',address.zipcode,'</p>',
+                                '<p class="mb-1">',address.suite,'</p>',
+                                '<p class="mb-1">Lat: ',address.lat ?? 'n/a','</p>',
+                                '<p class="mb-1">Lng: ',address.lng ?? 'n/a','</p>',
+                            '</div>',
+                        '</div'
+                    ].join(''));
+                });
+                
+                $('#user-detail-modal-body').append([
+                    '<hr>',
+                    '<h5>Companies</h5>'
+                ].join(''));
+
+                $.each(data.user.companies, function (index, company){
+                    $('#user-detail-modal-body').append([
+                        '<div class="list-group-item list-group-item-action">',
+                            '<div class="d-flex flex-column w-100">',
+                                '<h5 class="mb-1">',company.company,'</h5>',
+                                '<p class="mb-1">BS: ',company.bs ?? 'n/a','</p>',
+                                '<p class="mb-1">Catch Phrase: ',company.catch_phrase ?? 'n/a','</p>',
+                            '</div>',
+                        '</div'
+                    ].join(''));
+                });
+            },
+            error: function(error) {
+            }
+        });
+    });
 
     $('#cep').on('focusin', (ev) => {
         $('#dados-cep').html('');

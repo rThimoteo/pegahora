@@ -19,17 +19,14 @@ class UserController
                 u.id, 
                 u.name as user_name, 
                 u.username, 
-                u.email, 
-                c.name as company_name, 
-                a.street 
+                u.email 
             from
                 users as u 
-                join companies as c on 
-                    u.id = c.id_user 
-                join addresses as a on 
-                    u.id =  a.id_user
+            where
+                deleted_at is NULL        
             order by
                 user_name
+            
         ";
 
         $stmt = $dbConnection->query($sql, \PDO::FETCH_ASSOC);
@@ -124,7 +121,7 @@ class UserController
         $dbConnection = new Mysqldriver();
 
         try{
-            $sql="delete from users where id = :id";
+            $sql="update users set deleted_at = now() where id = :id";
 
             $stmt = $dbConnection->prepare($sql);
             $stmt->execute(['id' => $id]);
