@@ -2,6 +2,7 @@
 
 namespace Rthimoteo\Pegahora\Controllers;
 
+use PDO;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Rthimoteo\Pegahora\Db\Mysqldriver;
@@ -60,7 +61,7 @@ class UserController
                 a.suite as address_suite,
                 a.zipcode as address_zipcode,
                 a.lat as address_lat,
-                a.`long` as address_lng,
+                a.lng as address_lng,
                 c.id as company_id,
                 a.id as address_id
 
@@ -125,7 +126,7 @@ class UserController
 
             $stmt = $dbConnection->prepare($sql);
             $stmt->execute(['id' => $id]);
-            $json = json_encode(['message' => 'Usuário Excluído!', 'status' => 200]);
+            $json = json_encode(['message' => 'User Deleted!', 'status' => 200]);
         }
         catch(\Exception $e){
             $json = json_encode(['message' => $e->getMessage(), 'status' => $e->getCode()]);
@@ -148,7 +149,7 @@ class UserController
 
             $stmt = $dbConnection->prepare($sql);
             $stmt->execute($data);
-            $json = json_encode(['message' => 'Usuário Criado!', 'status' => 200]);
+            $json = json_encode(['message' => 'User Created!', 'status' => 200]);
         }
         catch(\Exception $e){
             $json = json_encode(['message' => $e->getMessage(), 'status' => $e->getCode()]);
@@ -159,4 +160,84 @@ class UserController
 
         return $response;
     }
+
+    public static function addCompany(array $data, Response $response)
+    {
+        header('Content-Type: application/json');
+
+        $dbConnection = new Mysqldriver();
+
+
+
+        try{
+            $sql="insert into companies(name, bs, catch_phrase, id_user) values (:name, :bs, :catch_phrase, :id_user)";
+
+            $stmt = $dbConnection->prepare($sql);
+            
+            $stmt->bindValue(':name',$data['name']);
+            $stmt->bindValue(':bs', !empty($data['bs']) ? $data['bs'] : NULL);
+            $stmt->bindValue(':catch_phrase', !empty($data['catch_phrase']) ? $data['catch_phrase'] : NULL);
+            $stmt->bindValue(':id_user', $data['id_user'], PDO::PARAM_INT);
+
+            $stmt->execute();
+            $json = json_encode(['message' => 'Company Added!', 'status' => 200]);
+        }
+        catch(\Exception $e){
+            $json = json_encode(['message' => $e->getMessage(), 'status' => $e->getCode()]);
+            $response->withStatus($e->getCode());
+        }
+
+        $response->getBody()->write($json);
+
+        return $response;
+    }
+
+    public static function addAddress(array $data, Response $response)
+    {
+        header('Content-Type: application/json');
+
+        $dbConnection = new Mysqldriver();
+
+        try{
+            $sql="insert into addresses(street, zipcode, suite, lat, lng, id_user) values (:street, :zipcode, :suite, :lat, :lng, :id_user)";
+
+            $stmt = $dbConnection->prepare($sql);
+            $stmt->execute($data);
+            $json = json_encode(['message' => 'Address Added!', 'status' => 200]);
+        }
+        catch(\Exception $e){
+            $json = json_encode(['message' => $e->getMessage(), 'status' => $e->getCode()]);
+            $response->withStatus($e->getCode());
+        }
+
+        $response->getBody()->write($json);
+
+        return $response;
+    }
+
+    public static function updateUser(int $id, array $data, Response $response)
+    {
+        header('Content-Type: application/json');
+
+        $dbConnection = new Mysqldriver();
+
+        $data['id']= $id;
+
+        try{
+            $sql="update users set name=:name, email=:email, username=:username, phone=:phone, website=:website where id=:id";
+
+            $stmt = $dbConnection->prepare($sql);
+            $stmt->execute($data);
+            $json = json_encode(['message' => 'User Edited!', 'status' => 200]);
+        }
+        catch(\Exception $e){
+            $json = json_encode(['message' => $e->getMessage(), 'status' => $e->getCode()]);
+            $response->withStatus($e->getCode());
+        }
+
+        $response->getBody()->write($json);
+
+        return $response;
+    }
+
 }

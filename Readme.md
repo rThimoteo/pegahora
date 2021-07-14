@@ -36,6 +36,11 @@ Utilizando JavaScript, CSS, PHP e HTML.
 * [ok] Trabalhar com Soft Delete
 * [ok] Listar detalhes do usuário via API
 * [ok] Adicionar usuário via API
+* [ok] Validação campos vazios Front-End/Back-End
+* [ok] Adicionar Classe HTML via JQuery
+* [ok] Inserir Address e Company via API
 * [] Editar usuário via API
+* [] Editar address via API
+* [] Editar company via API
 * [] Free Domain
 * [] Deploy Heroku

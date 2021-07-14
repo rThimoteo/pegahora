@@ -58,6 +58,25 @@
         return UserController::createUser($body, $response);
     });
 
+    $app->post('/user/company', function (Request $request, Response $response, array $args) 
+    {
+        $body = $request->getParsedBody();
+
+        return UserController::addCompany($body, $response);
+    });
+
+    $app->post('/user/address', function (Request $request, Response $response, array $args) 
+    {
+        $body = $request->getParsedBody();
+
+        return UserController::addAddress($body, $response);
+    });
+
+    $app->post('/user/{id}', function (Request $request, Response $response, array $args) 
+    {
+        $body = $request->getParsedBody();
+        
+        return UserController::updateUser($args['id'], $body, $response);
+    });
     
     $app->run();
- 
