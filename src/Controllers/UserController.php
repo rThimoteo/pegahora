@@ -95,6 +95,7 @@ class UserController
             }
 
             $dados['user']['addresses'][$row['address_id']] = [
+                'address_id' => $row['address_id'],
                 'street' => $row['address_street'],
                 'suite' => $row['address_suite'],
                 'zipcode' => $row['address_zipcode'],
@@ -103,6 +104,7 @@ class UserController
             ];
 
             $dados['user']['companies'][$row['company_id']] = [
+                'company_id' => $row['company_id'],
                 'company' => $row['company_name'],
                 'bs' => $row['company_bs'],
                 'catch_phrase' => $row['company_catch_phrase']
@@ -202,6 +204,14 @@ class UserController
             $sql="insert into addresses(street, zipcode, suite, lat, lng, id_user) values (:street, :zipcode, :suite, :lat, :lng, :id_user)";
 
             $stmt = $dbConnection->prepare($sql);
+
+            $stmt->bindValue(':street',$data['street']);
+            $stmt->bindValue(':zipcode',$data['zipcode']);
+            $stmt->bindValue(':suite', !empty($data['suite']) ? $data['suite'] : NULL);
+            $stmt->bindValue(':lat', !empty($data['lat']) ? $data['lat'] : NULL);
+            $stmt->bindValue(':lng', !empty($data['lng']) ? $data['lng'] : NULL);
+            $stmt->bindValue(':id_user', $data['id_user'], PDO::PARAM_INT);
+
             $stmt->execute($data);
             $json = json_encode(['message' => 'Address Added!', 'status' => 200]);
         }
@@ -239,5 +249,166 @@ class UserController
 
         return $response;
     }
+
+    public static function deleteAddress(int $id, Response $response)
+    {
+        header('Content-Type: application/json');
+
+        $dbConnection = new Mysqldriver();
+
+        try{
+            $sql="delete from addresses where id=:id";
+
+            $stmt = $dbConnection->prepare($sql);
+            $stmt->execute(['id' => $id]);
+            $json = json_encode(['message' => 'Address Deleted!', 'status' => 200]);
+        }
+        catch(\Exception $e){
+            $json = json_encode(['message' => $e->getMessage(), 'status' => $e->getCode()]);
+            $response->withStatus($e->getCode());
+        }
+
+        $response->getBody()->write($json);
+
+        return $response;
+    }
+
+    public static function deleteCompany(int $id, Response $response)
+    {
+        header('Content-Type: application/json');
+
+        $dbConnection = new Mysqldriver();
+
+        try{
+            $sql="delete from companies where id=:id";
+
+            $stmt = $dbConnection->prepare($sql);
+            $stmt->execute(['id' => $id]);
+            $json = json_encode(['message' => 'Company Deleted!', 'status' => 200]);
+        }
+        catch(\Exception $e){
+            $json = json_encode(['message' => $e->getMessage(), 'status' => $e->getCode()]);
+            $response->withStatus($e->getCode());
+        }
+
+        $response->getBody()->write($json);
+
+        return $response;
+    }
+
+    public static function getCompany(Request $request, array $args, Response $response)
+    {
+        header('Content-Type: application/json');
+
+        $dbConnection = new Mysqldriver();
+
+        $companyId = $args['id'];
+
+        $sql="
+        select 
+                *
+            from
+                companies 
+            where
+                id = $companyId
+        ";
+        
+        $stmt = $dbConnection->query($sql, \PDO::FETCH_ASSOC);
+        $dados = [
+            'company' => []
+        ];
+
+        foreach ($stmt as $row) {
+            $dados['company']=$row;
+        }
+
+        $json = json_encode($dados);
+        $response->getBody()->write($json);
+
+        return $response;
+    }
+
+    public static function updateCompany(int $id, array $data, Response $response)
+    {
+        header('Content-Type: application/json');
+
+        $dbConnection = new Mysqldriver();
+
+        $data['id']= $id;
+
+        try{
+            $sql="update companies set name=:name, bs=:bs, catch_phrase=:catch_phrase where id=:id";
+
+            $stmt = $dbConnection->prepare($sql);
+            $stmt->execute($data);
+            $json = json_encode(['message' => 'Company Edited!', 'status' => 200]);
+        }
+        catch(\Exception $e){
+            $json = json_encode(['message' => $e->getMessage(), 'status' => $e->getCode()]);
+            $response->withStatus($e->getCode());
+        }
+
+        $response->getBody()->write($json);
+
+        return $response;
+    }
+
+    public static function getAddress(Request $request, array $args, Response $response)
+    {
+        header('Content-Type: application/json');
+
+        $dbConnection = new Mysqldriver();
+
+        $addressId = $args['id'];
+
+        $sql="
+        select 
+                *
+            from
+                addresses 
+            where
+                id = $addressId
+        ";
+        
+        $stmt = $dbConnection->query($sql, \PDO::FETCH_ASSOC);
+        $dados = [
+            'address' => []
+        ];
+
+        foreach ($stmt as $row) {
+            $dados['address']=$row;
+        }
+
+        $json = json_encode($dados);
+        $response->getBody()->write($json);
+
+        return $response;
+    }
+
+    public static function updateAddress(int $id, array $data, Response $response)
+    {
+        header('Content-Type: application/json');
+
+        $dbConnection = new Mysqldriver();
+
+        $data['id']= $id;
+
+        try{
+            $sql="update addresses set street=:street, zipcode=:zipcode, suite=:suite, lat=:lat, lng=:lng where id=:id";
+
+            $stmt = $dbConnection->prepare($sql);
+            $stmt->execute($data);
+            $json = json_encode(['message' => 'Address Edited!', 'status' => 200]);
+        }
+        catch(\Exception $e){
+            $json = json_encode(['message' => $e->getMessage(), 'status' => $e->getCode()]);
+            $response->withStatus($e->getCode());
+        }
+
+        $response->getBody()->write($json);
+
+        return $response;
+    }
+
 
 }

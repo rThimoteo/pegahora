@@ -100,6 +100,51 @@ $(function(){
         });
     }
 
+    function rebindDeleteButtons() {
+        $('.btn-delete-address').off('click');
+        $('.btn-delete-address').on('click', function() {
+            var addressId = $(this).data('id');
+            var addressDiv = $(this).parent().parent().parent();
+            var response = confirm('Deseja mesmo excluir este endereço?');
+            if (response){
+                $.ajax({
+                    url: userApi+'address/'+addressId,
+                    type:'delete',
+                    success:function(data){
+                        addressDiv.remove();
+                        alert('Address Deleted!');
+                    },
+                    error:function(error){
+                        alert('Ocorreu um erro inesperado.');
+                        console.error(error);
+                    } 
+                });
+            }
+        });
+
+        $('.btn-delete-company').off('click');
+        $('.btn-delete-company').on('click', function() {
+            var companyId = $(this).data('id');
+            var companyDiv = $(this).parent().parent().parent();
+            var response = confirm('Deseja mesmo excluir este endereço?');
+            if (response){
+                $.ajax({
+                    url: userApi+'company/'+companyId,
+                    type:'delete',
+                    success:function(data){
+                        companyDiv.remove();
+                        alert('Company Deleted!');
+                    },
+                    error:function(error){
+                        alert('Ocorreu um erro inesperado.');
+                        console.error(error);
+                    } 
+                });
+            }
+        });
+    }
+    
+
     $('#user-detail-modal').on('show.bs.modal', function (event) {
         var userId = $(event.relatedTarget).data('id');
         var modal = $(this);
@@ -143,15 +188,24 @@ $(function(){
                 ].join(''));
                 $.each(data.user.addresses, function (index, address){
                     $('#user-detail-modal-body').append([
-                        '<div class="list-group-item list-group-item-action">',
-                            '<div class="d-flex flex-column w-100">',
-                                '<h5 class="mb-1">',address.street,'</h5>',
-                                '<p class="mb-1">',address.zipcode,'</p>',
-                                '<p class="mb-1">',address.suite,'</p>',
-                                '<p class="mb-1">Lat: ',address.lat ?? 'n/a','</p>',
-                                '<p class="mb-1">Lng: ',address.lng ?? 'n/a','</p>',
+                        '<div class="container">',
+                            '<div class="mb-2 px-1 py-3 row border rounded">',
+                                '<div class="col ">',    
+                                    '<div class="col d-flex flex-column w-70">',
+                                        '<h5 class="mb-1">',address.street,'</h5>',
+                                        '<p class="mb-1">',address.zipcode,'</p>',
+                                        '<p class="mb-1">',address.suite,'</p>',
+                                        '<p class="mb-1">Lat: ',address.lat ?? 'n/a','</p>',
+                                        '<p class="mb-1">Lng: ',address.lng ?? 'n/a','</p>',
+                                    '</div>',
+                                '</div>',
+                                '<div class="col-2 flex-column d-flex">',
+                                    '<button type="button" class="mb-2 btn btn-warning btn-edit-address" data-dismiss="modal" data-toggle="modal" data-target="#address-edit-modal" data-id="'+address.address_id+'"><i class="fas fa-pen"></i></button>',
+                                    '<br>',
+                                    '<button type="button" class="btn btn-danger btn-delete-address" data-id="'+address.address_id+'"><i class="fas fa-times"></i></button>',
+                                '</div>',
                             '</div>',
-                        '</div'
+                        '</div>'
                     ].join(''));
                 });
                 
@@ -170,17 +224,26 @@ $(function(){
 
                 $.each(data.user.companies, function (index, company){
                     $('#user-detail-modal-body').append([
-                        '<div class="list-group-item list-group-item-action">',
-                            '<div class="d-flex flex-column w-100">',
-                                '<h5 class="mb-1">',company.company,'</h5>',
-                                
-                                '<p class="mb-1">BS: ',company.bs ?? 'n/a','</p>',
-                                '<p class="mb-1">Catch Phrase: ',company.catch_phrase ?? 'n/a','</p>',
+                        '<div class="container">',
+                            '<div class="mb-2 px-1 py-3 row border rounded">',
+                                '<div class="col ">',    
+                                    '<div class="col d-flex flex-column w-70">',
+                                        '<h5 class="mb-1">',company.company,'</h5>',
+                                        '<p class="mb-1">BS: ',company.bs ?? 'n/a','</p>',
+                                        '<p class="mb-1">Catch Phrase: ',company.catch_phrase ?? 'n/a','</p>',
+                                    '</div>',
+                                '</div>',
+                                '<div class="col-2 flex-column d-flex">',
+                                    '<button type="button" class="mb-2 btn btn-warning btn-edit-company" data-dismiss="modal" data-toggle="modal" data-target="#company-edit-modal" data-id="'+company.company_id+'"><i class="fas fa-pen"></i></button>',
+                                    '<br>',
+                                    '<button type="button" class="btn btn-danger btn-delete-company" data-id="'+company.company_id+'"><i class="fas fa-times"></i></button>',
+                                '</div>',
                             '</div>',
-                        '</div'
+                        '</div>'
                     ].join(''));
                 });
 
+                rebindDeleteButtons();
                 globalUserID = data.user.id;
                 globalUserName = data.user.name;
 
@@ -202,7 +265,7 @@ $(function(){
                 $('#user-edit-modal-body').html('<p class="text-center"> Loading... </p>');
             },
             success: function(data) {
-                $('#user-edit-modal-title').text(data.user.name);
+                $('#user-edit-modal-title').text('Edit - '+data.user.name);
                 $('#user-edit-modal-body').html('');
                 
                 $('#user-edit-modal-body').append([
@@ -224,6 +287,80 @@ $(function(){
             error: function(error) {
             }
         });
+    });
+
+    $('#company-edit-modal').on('show.bs.modal', function (event) {
+        var companyId = $(event.relatedTarget).data('id');
+        globalCompanyId = companyId;
+        $.ajax({
+            url: userApi+'company/'+companyId,
+            beforeSend: function() {
+                $('#company-edit-modal-title').text('Loading...');
+                $('#company-edit-modal-body').html('<p class="text-center"> Loading... </p>');
+            },
+            success: function(data) {
+                $('#company-edit-modal-title').text('Edit - '+data.company.name);
+                $('#company-edit-modal-body').html('');
+                
+                $('#company-edit-modal-body').append([
+                    '<dl class="row">',
+                        '<dt class="col-sm-3">Company Name:</dt>',
+                        '<input id="company-edit-name" class="col-sm-9 mb-3 form-control" value="'+data.company.name+'">',
+                        '<dt class="col-sm-3">BS:</dt>',
+                        '<input id="company-edit-bs" class="col-sm-9 mb-3 form-control" value="'+data.company.bs+'">',
+                        '<dt class="col-sm-3">Catch Phrase:</dt>',
+                        '<input id="company-edit-phrase" class="col-sm-9 mb-3 form-control" value="'+data.company.catch_phrase+'">',
+                    '</dl>'
+                ].join(''));
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+
+        $('#company-edit-modal-footer').html(
+            '<button type="button" class="btn btn-secondary btn-back-to-user" data-dismiss="modal" data-toggle="modal" data-target="#user-detail-modal" data-id="'+globalUserID+'"">Back</button>'
+            +'<button type="submit" class="btn btn-success">Edit Company</button>'
+        );
+    });
+
+    $('#address-edit-modal').on('show.bs.modal', function (event) {
+        var addressId = $(event.relatedTarget).data('id');
+        globalAddressId = addressId;
+        $.ajax({
+            url: userApi+'address/'+addressId,
+            beforeSend: function() {
+                $('#address-edit-modal-title').text('Loading...');
+                $('#address-edit-modal-body').html('<p class="text-center"> Loading... </p>');
+            },
+            success: function(data) {
+                $('#address-edit-modal-title').text('Edit Address');
+                $('#address-edit-modal-body').html('');
+                
+                $('#address-edit-modal-body').append([
+                    '<dl class="row">',
+                        '<dt class="col-sm-3">Street Name:</dt>',
+                        '<input id="address-edit-street" class="col-sm-9 mb-3 form-control" value="'+data.address.street+'">',
+                        '<dt class="col-sm-3">Zipcode:</dt>',
+                        '<input id="address-edit-zipcode" class="col-sm-9 mb-3 form-control" value="'+data.address.zipcode+'">',
+                        '<dt class="col-sm-3">Suite:</dt>',
+                        '<input id="address-edit-suite" class="col-sm-9 mb-3 form-control" value="'+data.address.suite+'">',
+                        '<dt class="col-sm-3">Latitude:</dt>',
+                        '<input id="address-edit-lat" class="col-sm-9 mb-3 form-control" value="'+data.address.lat+'">',
+                        '<dt class="col-sm-3">Longitude:</dt>',
+                        '<input id="address-edit-lng" class="col-sm-9 mb-3 form-control" value="'+data.address.lng+'">',
+                    '</dl>'
+                ].join(''));
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+
+        $('#address-edit-modal-footer').html(
+            '<button type="button" class="btn btn-secondary btn-back-to-user" data-dismiss="modal" data-toggle="modal" data-target="#user-detail-modal" data-id="'+globalUserID+'"">Back</button>'
+            +'<button type="submit" class="btn btn-success">Edit address</button>'
+        );
     });
 
     $('#company-add-modal').on('show.bs.modal', function () {
@@ -288,6 +425,67 @@ $(function(){
             url: userApi+globalUserID,
 
             data:userData,
+
+            type: 'POST',
+
+            beforeSend: function() {
+
+            },
+            
+            success: function(data) {
+                console.log(data);
+            },
+            
+            error: function(error) {
+                console.log(error);
+            }
+        });    
+        
+    });
+
+    $('#form-edit-company').on('submit', (ev) => { 
+        ev.preventDefault();
+        var companyData = {
+            'name' : $('#company-edit-name').val(),
+            'bs' : $('#company-edit-bs').val(),
+            'catch_phrase' : $('#company-edit-phrase').val()
+        };
+        $.ajax({
+            url: userApi+'company/edit/'+globalCompanyId,
+
+            data:companyData,
+
+            type: 'POST',
+
+            beforeSend: function() {
+
+            },
+            
+            success: function(data) {
+                console.log(data);
+            },
+            
+            error: function(error) {
+                console.log(error);
+            }
+        });    
+        
+    });
+
+    $('#form-edit-address').on('submit', (ev) => { 
+        ev.preventDefault();
+        var addressData = {
+            'street' : $('#address-edit-street').val(),
+            'suite' : $('#address-edit-suite').val(),
+            'zipcode' : $('#address-edit-zipcode').val(),
+            'lat' : $('#address-edit-lat').val(),
+            'lng' : $('#address-edit-lng').val()
+        };
+
+        $.ajax({
+            url: userApi+'address/edit/'+globalAddressId,
+
+            data:addressData,
 
             type: 'POST',
 

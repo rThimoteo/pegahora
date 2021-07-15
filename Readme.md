@@ -39,8 +39,9 @@ Utilizando JavaScript, CSS, PHP e HTML.
 * [ok] Validação campos vazios Front-End/Back-End
 * [ok] Adicionar Classe HTML via JQuery
 * [ok] Inserir Address e Company via API
-* [] Editar usuário via API
-* [] Editar address via API
-* [] Editar company via API
+* [ok] Editar usuário via API
+* [ok] Editar address via API
+* [ok] Editar company via API
+* [ok] CRUD User, Company, Address via API própria
 * [] Free Domain
 * [] Deploy Heroku

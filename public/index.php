@@ -79,4 +79,42 @@
         return UserController::updateUser($args['id'], $body, $response);
     });
     
+    $app->delete('/user/address/{id}', function (Request $request, Response $response, array $args) 
+    {
+        
+        return UserController::deleteAddress($args['id'],$response);
+    });
+
+    $app->delete('/user/company/{id}', function (Request $request, Response $response, array $args) 
+    {
+        
+        return UserController::deleteCompany($args['id'],$response);
+    });
+
+    $app->get('/user/company/{id}', function (Request $request, Response $response, array $args) 
+    {
+
+        return UserController::getCompany($request, $args, $response);
+    });
+
+    $app->post('/user/company/edit/{id}', function (Request $request, Response $response, array $args) 
+    {
+        $body = $request->getParsedBody();
+
+        return UserController::updateCompany($args['id'], $body, $response);
+    });
+
+    $app->get('/user/address/{id}', function (Request $request, Response $response, array $args) 
+    {
+
+        return UserController::getAddress($request, $args, $response);
+    });
+
+    $app->post('/user/address/edit/{id}', function (Request $request, Response $response, array $args) 
+    {
+        $body = $request->getParsedBody();
+
+        return UserController::updateAddress($args['id'], $body, $response);
+    });
+
     $app->run();
