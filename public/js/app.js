@@ -32,8 +32,8 @@ $(function(){
         });
     });
     
-    const usersApiEndpoint = 'http://web.pegahora.com/users';
-    const userApi = 'http://web.pegahora.com/user/';
+    const usersApiEndpoint = '/users';
+    const userApi = '/user/';
 
     const loadingDataRow = [
         '<tr id="loading">',
