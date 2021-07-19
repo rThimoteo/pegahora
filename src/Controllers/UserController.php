@@ -67,9 +67,9 @@ class UserController
 
             from
                 users as u 
-                left join companies as c on 
+                join companies as c on 
                     u.id = c.id_user 
-                left join addresses as a on 
+                join addresses as a on 
                     u.id =  a.id_user
             where
                 u.id = $userId
