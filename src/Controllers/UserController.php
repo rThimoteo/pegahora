@@ -67,9 +67,9 @@ class UserController
 
             from
                 users as u 
-                join companies as c on 
+                left join companies as c on 
                     u.id = c.id_user 
-                join addresses as a on 
+                left join addresses as a on 
                     u.id =  a.id_user
             where
                 u.id = $userId
@@ -94,21 +94,27 @@ class UserController
                 ];
             }
 
-            $dados['user']['addresses'][$row['address_id']] = [
-                'address_id' => $row['address_id'],
-                'street' => $row['address_street'],
-                'suite' => $row['address_suite'],
-                'zipcode' => $row['address_zipcode'],
-                'lat' => $row['address_lat'],
-                'lng' => $row['address_lng']
-            ];
+            if ($row['address_id']){
+                
+                $dados['user']['addresses'][$row['address_id']] = [
+                    'address_id' => $row['address_id'],
+                    'street' => $row['address_street'],
+                    'suite' => $row['address_suite'],
+                    'zipcode' => $row['address_zipcode'],
+                    'lat' => $row['address_lat'],
+                    'lng' => $row['address_lng']
+                ];
+            }
+            
+            if ($row['company_id']){
 
-            $dados['user']['companies'][$row['company_id']] = [
-                'company_id' => $row['company_id'],
-                'company' => $row['company_name'],
-                'bs' => $row['company_bs'],
-                'catch_phrase' => $row['company_catch_phrase']
-            ];
+                $dados['user']['companies'][$row['company_id']] = [
+                    'company_id' => $row['company_id'],
+                    'company' => $row['company_name'],
+                    'bs' => $row['company_bs'],
+                    'catch_phrase' => $row['company_catch_phrase']
+                ];
+            }
         }
 
         $json = json_encode($dados);
