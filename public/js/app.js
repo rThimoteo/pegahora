@@ -380,6 +380,7 @@ $(function(){
     });
 
     $('#form-user').on('submit', (ev) => { 
+        ev.preventDefault();
         var userData = {
             'name' : $('#form-user-name').val(),
             'email' : $('#form-user-email').val(),
@@ -387,7 +388,6 @@ $(function(){
             'phone' : $('#form-user-phone').val(),
             'website' : $('#form-user-website').val()
         };
-        console.log(userData);
         $.ajax({
             
             url: userApi+'create',
@@ -401,7 +401,8 @@ $(function(){
             },
             
             success: function(data) {
-                console.log(data);
+                alert('Usuário Criado!');
+                window.location='/';
             },
             
             error: function(error) {
@@ -420,7 +421,6 @@ $(function(){
             'phone' : $('#user-edit-phone').val(),
             'website' : $('#user-edit-website').val()
         };
-        console.log(userData);
         $.ajax({
             url: userApi+globalUserID,
 
@@ -433,7 +433,7 @@ $(function(){
             },
             
             success: function(data) {
-                console.log(data);
+                alert('Usuário atualizado!');
             },
             
             error: function(error) {
@@ -462,7 +462,7 @@ $(function(){
             },
             
             success: function(data) {
-                console.log(data);
+                alert('Compania editada!');
             },
             
             error: function(error) {
@@ -494,7 +494,7 @@ $(function(){
             },
             
             success: function(data) {
-                console.log(data);
+                alert('Endereço editado!');
             },
             
             error: function(error) {
@@ -534,7 +534,6 @@ $(function(){
             },
             
             success: function(data) {
-                console.log(data);
                 alert('Company '+companyData.name+' added!');
                 $('.form-control').val('');
                 
@@ -577,7 +576,6 @@ $(function(){
             },
             
             success: function(data) {
-                console.log(data);
                 alert('Address added!');
                 $('.form-control').val('');
                 

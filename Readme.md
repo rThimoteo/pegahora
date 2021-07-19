@@ -43,5 +43,6 @@ Utilizando JavaScript, CSS, PHP e HTML.
 * [ok] Editar address via API
 * [ok] Editar company via API
 * [ok] CRUD User, Company, Address via API própria
-* [] Free Domain
-* [] Deploy Heroku
+* [ok] Criar Database online
+* [ok] Deploy Heroku
+* [] Migrar projeto para Laravel
