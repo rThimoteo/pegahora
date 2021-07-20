@@ -43,4 +43,7 @@ Utilizando JavaScript, CSS, PHP e HTML.
 * [ok] CRUD User, Company, Address via API própria
 * [ok] Criar Database online
 * [ok] Deploy Heroku
+* [ok] Criar instância Laravel
+* [ok] Navegação .env
+* [] Padrão MVC Laravel
 * [] Migrar projeto para Laravel
