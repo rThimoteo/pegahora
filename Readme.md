@@ -45,5 +45,7 @@ Utilizando JavaScript, CSS, PHP e HTML.
 * [ok] Deploy Heroku
 * [ok] Criar instância Laravel
 * [ok] Navegação .env
-* [] Padrão MVC Laravel
-* [] Migrar projeto para Laravel
+* [ok] Padrão MVC Laravel
+* [ok] Migrar projeto para Laravel
+
+[Link para o projeto em Laravel.](https://github.com/rThimoteo/laravel-pegahora)
